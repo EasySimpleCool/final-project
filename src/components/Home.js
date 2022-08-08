@@ -10,9 +10,10 @@ import {
   Tag,
   Input,
   Center,
+  Box,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import shirt from "../blank-shirt.png"
+import shirt from "../blank-shirt.png";
 
 export function Home() {
   const [shirtText, setShirtText] = useState("");
@@ -23,19 +24,21 @@ export function Home() {
 
   return (
     <VStack spacing={4}>
-      <Heading>This is my homepage with Jack sh*te on it</Heading>
+      {/* <Heading>This is my homepage with Jack sh*te on it</Heading> */}
       <Center>
-        <Image
-          src={shirt}
-          alt=""
-          boxSize="100%"
-          borderRadius={4}
-        />
-        <Heading textColor="white" position="absolute">{shirtText}</Heading>
+        <Image src={shirt} alt="" boxSize="100%" borderRadius={4} />
+        <Heading
+          position="absolute"
+          bottom="65%"
+          fontSize="md"
+          textColor="white"
+        >
+          {shirtText}
+        </Heading>
       </Center>
-
-      <Input onChange={handleChange} />
-      <Button>Buy</Button>
+      <Heading fontSize="xs">Talk some sh*rt</Heading>
+      <Input maxLength={20} onChange={handleChange} />
+      {/* <Button>Buy</Button> */}
     </VStack>
   );
 }

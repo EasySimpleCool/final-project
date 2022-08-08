@@ -15,13 +15,11 @@ import {
 export function Shirt() {
   const [selectedShirt, setShirt] = useState(null);
   const params = useParams();
-  
-
 
   function SelectSize() {
     const [value, setValue] = useState("1");
     // const [selectedVariant, setSelectedVariant] = useState("")
-    console.log(selectedShirt.data.product.options)
+    console.log(selectedShirt);
 
     // function handleChange(event) {
     //   setSelectedVariant(event.target.value);
@@ -32,8 +30,10 @@ export function Shirt() {
       <RadioGroup onChange={setValue} value={value}>
         <Text fontSize="xs">Size</Text>
         <Stack direction="row" spacing={4}>
-          {selectedShirt.data.product.options.values((data, k) => (
-            <Radio key={k} value={data.values}>{data.values}</Radio>
+          {selectedShirt.data.product.options[0].values.map((data, k) => (
+            <Radio key={k} value={data}>
+              {data}
+            </Radio>
           ))}
         </Stack>
       </RadioGroup>
@@ -65,30 +65,30 @@ export function Shirt() {
         query: `{
           product(id: "gid://shopify/Product/${params.id}") {
             title
-            priceRange {
-              maxVariantPrice {
-                amount
-              }
-            }
-            tags
-            variants(first: 20) {
-              edges {
-                node {
-                  title
-                  id
-                }
-              } 
-            }
-            description
-            options { 
-              values
-            }
-            featuredImage {
-              id
-              url
-            }
-          }
-        }`,
+		priceRange {
+			maxVariantPrice {
+				amount
+			}
+		}
+		tags
+		variants(first: 20) {
+			edges {
+				node {
+					title
+					id
+				}
+			} 
+		}
+		description
+		options { 
+			values
+		}
+		featuredImage {
+			id
+			url
+		}
+  }
+}  `,
       }),
     })
       .then((response) => response.json())
@@ -112,7 +112,6 @@ export function Shirt() {
       <Heading size="md">
         {selectedShirt.data.product.priceRange.maxVariantPrice.amount}
       </Heading>
-      {/* <SelectColour /> */}
       <SelectSize />
       <Button colorScheme="blue">Add to Cart</Button>
     </VStack>
