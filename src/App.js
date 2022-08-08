@@ -1,28 +1,66 @@
-import Home from "./Home";
-import ProductLibrary from "./ProductLibrary";
-import ProductDetails from "./ProductDetails";
+import { Home } from "./components/Home";
+import { Shirts } from "./components/Shirts";
+import { Shirt } from "./components/Shirt";
+import { Cart } from "./components/Cart";
+import { useState, useEffect } from "react";
 import * as React from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
-import { HStack } from "@chakra-ui/react";
-import "./App.css"
+import "./App.css";
+import {
+  Container,
+  Heading,
+  HStack,
+  VStack,
+  Flex,
+  Spacer,
+} from "@chakra-ui/react";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <HStack spacing='8px'>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/shop">Shop</NavLink>
-        <NavLink to="/cart">Cart</NavLink>
-      </HStack>
+  const [cart, setCart] = useState();
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<ProductLibrary />}>
-          <Route path=":id" element={<ProductDetails />} />
-        </Route>
-        <Route path="*" element={<p>Page not found</p>} />
-      </Routes>
-    </BrowserRouter>
+  let activeStyle = {
+    textDecoration: "underline",
+  };
+
+  return (
+    <Container>
+      <BrowserRouter>
+        <VStack>
+          <HStack>
+            <NavLink
+              to="/"
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <Heading>Home</Heading>
+            </NavLink>
+            <NavLink
+              to="/shirts"
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <Heading>Shirts</Heading>
+            </NavLink>
+            <NavLink
+              to="/cart"
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <Heading>Cart</Heading>
+            </NavLink>
+          </HStack>
+          <Spacer />
+          <Container borderWidth='1px' borderRadius="8" padding="4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/shirts">
+                <Route index element={<Shirts />} />
+                <Route path="gid://shopify/Product/:id" element={<Shirt />} />
+              </Route>
+              <Route path="/cart" element={<Cart />} />
+              <Route path="*" element={<p>Page not found</p>} />
+            </Routes>
+          </Container>
+        </VStack>
+      </BrowserRouter>
+    </Container>
   );
 }
 
