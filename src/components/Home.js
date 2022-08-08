@@ -23,7 +23,7 @@ export function Home() {
 
   return (
     <VStack spacing={4}>
-      <Heading>This is my homepage with Jack shite on it</Heading>
+      <Heading>This is my homepage with Jack sh*te on it</Heading>
       <Center>
         <Image
           src={shirt}
