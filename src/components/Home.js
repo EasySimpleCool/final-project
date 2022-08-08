@@ -36,8 +36,8 @@ export function Home() {
           {shirtText}
         </Heading>
       </Center>
-      <Heading fontSize="xs">Talk some sh*rt</Heading>
-      <Input maxLength={20} onChange={handleChange} />
+      {/* <Heading>Talk some sh*rt</Heading> */}
+      <Input textAlign="center" placeholder='Talk Some Sh*rt' maxLength={20} onChange={handleChange} />
       {/* <Button>Buy</Button> */}
     </VStack>
   );
