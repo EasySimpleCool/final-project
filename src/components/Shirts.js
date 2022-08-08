@@ -28,7 +28,7 @@ export function Shirts() {
     })
       .then((res) => res.json())
       // eslint-disable-next-line no-sequences
-      .then((data) => (setProductInfo(data), console.log(data)))
+      .then((data) => setProductInfo(data))
       .catch((error) => console.error("error:", error));
   }, []);
 

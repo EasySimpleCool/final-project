@@ -2,7 +2,6 @@ import { Home } from "./components/Home";
 import { Shirts } from "./components/Shirts";
 import { Shirt } from "./components/Shirt";
 import { Cart } from "./components/Cart";
-import { useState, useEffect } from "react";
 import * as React from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import "./App.css";
@@ -11,15 +10,16 @@ import {
   Heading,
   HStack,
   VStack,
-  Flex,
   Spacer,
 } from "@chakra-ui/react";
 
 function App() {
-  const [cart, setCart] = useState();
-
   let activeStyle = {
-    textDecoration: "underline",
+    opacity: "1",
+  };
+
+  let inactiveStyle = {
+    opacity: ".1",
   };
 
   return (
@@ -29,21 +29,21 @@ function App() {
           <HStack>
             <NavLink
               to="/"
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
             >
-              <Heading>Home</Heading>
+              <Heading size='4xl'>Home</Heading>
             </NavLink>
             <NavLink
               to="/shirts"
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
             >
-              <Heading>Shirts</Heading>
+              <Heading size='4xl'>Shirts</Heading>
             </NavLink>
             <NavLink
               to="/cart"
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
             >
-              <Heading>Cart</Heading>
+              <Heading size='4xl'>Cart</Heading>
             </NavLink>
           </HStack>
           <Spacer />

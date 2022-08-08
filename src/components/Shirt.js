@@ -11,49 +11,40 @@ import {
   Text,
   Tag,
 } from "@chakra-ui/react";
+import {productQuery} from "./ProductQuery"
 
 export function Shirt() {
   const [selectedShirt, setShirt] = useState(null);
+  const [productId, setProductId] = useState("1");
   const params = useParams();
+  function getPrice() {
+    const edge = selectedShirt.data.product.variants.edges.find(
+      (edge) => edge.node.id === productId
+    );
+    if (edge === undefined) {
+      return selectedShirt.data.product.priceRange.maxVariantPrice.amount
+    }
+    return edge.node.priceV2.amount
+  }
 
   function SelectSize() {
-    const [value, setValue] = useState("1");
-    // const [selectedVariant, setSelectedVariant] = useState("")
-    console.log(selectedShirt);
-
-    // function handleChange(event) {
-    //   setSelectedVariant(event.target.value);
-    //   console.log(selectedVariant);
-    // }
-
     return (
-      <RadioGroup onChange={setValue} value={value}>
+      <RadioGroup onChange={setProductId} value={productId}>
         <Text fontSize="xs">Size</Text>
         <Stack direction="row" spacing={4}>
-          {selectedShirt.data.product.options[0].values.map((data, k) => (
-            <Radio key={k} value={data}>
-              {data}
-            </Radio>
-          ))}
+          {selectedShirt.data.product.variants.edges.map((data, k) => {
+            const title = data.node.title;
+            const node = data.node.id;
+            return (
+              <Radio key={k} value={node}>
+                {title}
+              </Radio>
+            );
+          })}
         </Stack>
       </RadioGroup>
     );
   }
-
-  // function SelectSize() {
-  //   const [value, setValue] = useState("1");
-  //   return (
-  //     <RadioGroup onChange={setValue} value={value}>
-  //       <Text fontSize="xs">Size</Text>
-  //       <Stack direction="row" spacing={4}>
-  //         <Radio value="1">Small</Radio>
-  //         <Radio value="2">Medium</Radio>
-  //         <Radio value="3">Large</Radio>
-  //       </Stack>
-  //     </RadioGroup>
-  //   );
-  // }
-
   useEffect(() => {
     fetch("https://talkthatshirt.myshopify.com/api/2022-07/graphql.json", {
       method: "POST",
@@ -61,35 +52,7 @@ export function Shirt() {
         "X-Shopify-Storefront-Access-Token": "c9ffb2f297d048754557c62e2887572c",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        query: `{
-          product(id: "gid://shopify/Product/${params.id}") {
-            title
-		priceRange {
-			maxVariantPrice {
-				amount
-			}
-		}
-		tags
-		variants(first: 20) {
-			edges {
-				node {
-					title
-					id
-				}
-			} 
-		}
-		description
-		options { 
-			values
-		}
-		featuredImage {
-			id
-			url
-		}
-  }
-}  `,
-      }),
+      body: JSON.stringify(productQuery(params.id)),
     })
       .then((response) => response.json())
       // eslint-disable-next-line no-sequences
@@ -109,11 +72,11 @@ export function Shirt() {
       <Heading size="lg">{selectedShirt.data.product.title}</Heading>
       <Tag>{selectedShirt.data.product.tags}</Tag>
       <Text>{selectedShirt.data.product.description}</Text>
-      <Heading size="md">
-        {selectedShirt.data.product.priceRange.maxVariantPrice.amount}
-      </Heading>
+      <Heading size="md">${getPrice()}</Heading>
       <SelectSize />
-      <Button colorScheme="blue">Add to Cart</Button>
+      <Button disabled="true" colorScheme="blue">
+        Add to Cart
+      </Button>
     </VStack>
   ) : (
     <div>EMPTY</div>
