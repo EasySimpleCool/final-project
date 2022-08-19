@@ -35,11 +35,11 @@ function App() {
 
   useEffect(() => {
     if (cartId === "") {
-      fetch("https://talkthatshirt.myshopify.com/api/2022-07/graphql.json", {
+      fetch(process.env.REACT_APP_SHOPIFY_DOMAIN, {
         method: "POST",
         headers: {
           "X-Shopify-Storefront-Access-Token":
-            "c9ffb2f297d048754557c62e2887572c",
+            process.env.REACT_APP_SHOPIFY_API,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
