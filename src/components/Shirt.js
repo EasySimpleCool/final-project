@@ -23,10 +23,10 @@ export function Shirt() {
   // params is the end of the URL. Then plug it into getProduct request
   const params = useParams();
   useEffect(() => {
-    fetch("https://talkthatshirt.myshopify.com/api/2022-07/graphql.json", {
+    fetch(process.env.REACT_APP_SHOPIFY_DOMAIN, {
       method: "POST",
       headers: {
-        "X-Shopify-Storefront-Access-Token": "c9ffb2f297d048754557c62e2887572c",
+        "X-Shopify-Storefront-Access-Token": process.env.REACT_APP_SHOPIFY_API,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(productQuery(params.id)),
@@ -53,7 +53,7 @@ export function Shirt() {
     if (edge === undefined) {
       return shirtData.data.product.priceRange.maxVariantPrice.amount;
     }
-    return edge.node.priceV2.amount
+    return edge.node.priceV2.amount;
   }
 
   function SelectSize() {
@@ -76,11 +76,10 @@ export function Shirt() {
   }
 
   function addToCart() {
-    
-    fetch("https://talkthatshirt.myshopify.com/api/2022-07/graphql.json", {
+    fetch(process.env.REACT_APP_SHOPIFY_DOMAIN, {
       method: "POST",
       headers: {
-        "X-Shopify-Storefront-Access-Token": "c9ffb2f297d048754557c62e2887572c",
+        "X-Shopify-Storefront-Access-Token": process.env.REACT_APP_SHOPIFY_API,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

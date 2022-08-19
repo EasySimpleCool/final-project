@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { productsQuery } from "./ProductsQuery";
-import {
-  Image,
-  VStack,
-  Heading,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
+import { Image, VStack, Heading, Grid, GridItem } from "@chakra-ui/react";
 
 export function Shirts() {
   const [productInfo, setProductInfo] = useState(null);
 
   useEffect(() => {
-    fetch("https://talkthatshirt.myshopify.com/api/2022-07/graphql.json", {
+    fetch(process.env.REACT_APP_SHOPIFY_DOMAIN, {
       method: "POST",
       headers: {
-        "X-Shopify-Storefront-Access-Token": "c9ffb2f297d048754557c62e2887572c",
+        "X-Shopify-Storefront-Access-Token": process.env.REACT_APP_SHOPIFY_API,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -42,7 +36,9 @@ export function Shirts() {
                 borderRadius={4}
               />
               <Heading size="md">{shirt.node.title}</Heading>
-              <Heading size="sm">${shirt.node.priceRange.maxVariantPrice.amount}</Heading>
+              <Heading size="sm">
+                ${shirt.node.priceRange.maxVariantPrice.amount}
+              </Heading>
             </VStack>
           </GridItem>
         </Link>

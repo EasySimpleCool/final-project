@@ -26,10 +26,10 @@ export function Cart() {
   // send cartRetrieve request with cartId plugged into it
   const [cartData, setCartData] = useState(null);
   useEffect(() => {
-    fetch("https://talkthatshirt.myshopify.com/api/2022-07/graphql.json", {
+    fetch(process.env.REACT_APP_SHOPIFY_DOMAIN, {
       method: "POST",
       headers: {
-        "X-Shopify-Storefront-Access-Token": "c9ffb2f297d048754557c62e2887572c",
+        "X-Shopify-Storefront-Access-Token": process.env.REACT_APP_SHOPIFY_API,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -52,10 +52,10 @@ export function Cart() {
   // }
 
   function removeFromCart(thisValue) {
-    fetch("https://talkthatshirt.myshopify.com/api/2022-07/graphql.json", {
+    fetch(process.env.REACT_APP_SHOPIFY_DOMAIN, {
       method: "POST",
       headers: {
-        "X-Shopify-Storefront-Access-Token": "c9ffb2f297d048754557c62e2887572c",
+        "X-Shopify-Storefront-Access-Token": process.env.REACT_APP_SHOPIFY_API,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
