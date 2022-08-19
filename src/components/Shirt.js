@@ -104,8 +104,6 @@ export function Shirt() {
       <Button onClick={addToCart} colorScheme="blue">
         Add to Cart
       </Button>
-      <div>{JSON.stringify(productId)}</div>
-      <div>{JSON.stringify(cartId)}</div>
     </div>
   ) : (
     <div>EMPTY</div>

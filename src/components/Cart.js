@@ -11,8 +11,6 @@ import {
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocalStorage } from "@mantine/hooks";
-// import { cartCreate } from "../requests/cartCreate";
-// import { getByPlaceholderText } from "@testing-library/react";
 import { cartRetrieve } from "../requests/cartRetrieve";
 import { cartLinesRemove } from "../requests/cartLinesRemove";
 
@@ -41,15 +39,6 @@ export function Cart() {
       .then((data) => setCartData(data))
       .catch((error) => console.error("error:", error));
   }, []);
-
-  // function CartItem(props) {
-  //   <div>
-  //     <Image src={props.url} alt="" boxSize="100%" borderRadius={4} />
-  //     <Heading>{props.title}</Heading>
-  //     <Spacer></Spacer>
-  //     <Heading>{props.price}</Heading>
-  //   </div>;
-  // }
 
   function removeFromCart(thisValue) {
     fetch(process.env.REACT_APP_SHOPIFY_DOMAIN, {
@@ -80,9 +69,6 @@ export function Cart() {
               <Heading>{edge.node.cost.amountPerQuantity.amount}</Heading>
             </HStack>
             <Text>Quantity:{edge.node.quantity}</Text>
-            {/* <Button onClick={removeFromCart(edge.node.merchandise.id)}>
-              {edge.node.merchandise.id}
-            </Button> */}
           </div>
         );
       })}
