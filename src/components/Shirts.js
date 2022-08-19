@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { productsQuery } from "./ProductsQuery";
 import {
-  Button,
   Image,
   VStack,
   Heading,
-  Radio,
-  RadioGroup,
   Grid,
   GridItem,
 } from "@chakra-ui/react";

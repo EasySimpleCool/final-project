@@ -20,7 +20,7 @@ export function Home() {
         <Image src={shirt} alt="" boxSize="100%" borderRadius={4} />
         <Heading
           position="absolute"
-          bottom="65%"
+          bottom="55%"
           fontSize="md"
           textColor="white"
         >
